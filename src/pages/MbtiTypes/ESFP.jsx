@@ -14,7 +14,7 @@ function ESFP() {
   return (
     <main>
       <HeaderType
-        typeName={' سرگرم‌کننده'}
+        typeName={'سرگرم‌کننده'}
         type={'ESFP-A / ESFP-T'}
         typeImg={esfp}
         color=""
@@ -124,6 +124,7 @@ function ESFP() {
         <div></div>
       </section>
       <PersonTypes
+        categuryName={'سرگرم‌کننده'}
         img1={adele}
         name1={'Adele'}
         img2={oliver}

@@ -54,7 +54,6 @@ function MBTI() {
 
   const seeTheResultHandler = () => {
     let resultPath = '/talent-survey/result/mbti';
-
     const callbackFunction = () => {
       navigate(resultPath);
       window.scrollTo(0, 0);
@@ -84,31 +83,28 @@ function MBTI() {
 
       let personality = '';
 
-      if (result.E > result.I) personality += 'E';
-      else personality += 'I';
-
-      if (result.S > result.N) personality += 'S';
-      else personality += 'N';
-
-      if (result.T > result.F) personality += 'T';
-      else personality += 'F';
-
-      if (result.J > result.P) personality += 'J';
-      else personality += 'P';
+      personality +=
+        result.E > result.I ? 'E' : 'I';
+      personality +=
+        result.S > result.N ? 'S' : 'N';
+      personality +=
+        result.T > result.F ? 'T' : 'F';
+      personality +=
+        result.J > result.P ? 'J' : 'P';
 
       return personality;
     };
 
     const resultPersonality = calculateResult();
 
-    const testDataObj = {
+    const testData = {
       name: 'mbti',
-      result: `https://${resultPersonality}.ir`,
+      data: resultPersonality,
     };
     dispatch(
       sendTestResult({
         user_token,
-        ...testDataObj,
+        testData,
         cb: callbackFunction,
         type: resultPersonality,
       }),
@@ -166,7 +162,7 @@ function MBTI() {
               className="text-white bg-primaryColor rounded-3xl p-2 px-3 text-base"
               onClick={seeTheResultHandler}
             >
-              دیدن نتیجه تست
+              adsfasdf دیدن نتیجه تست
             </button>
           )}
         </section>

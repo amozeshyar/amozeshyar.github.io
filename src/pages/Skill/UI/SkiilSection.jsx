@@ -5,7 +5,7 @@ export default function SkillSection({
 }) {
   return (
     <>
-      <div className="flex items-center justify-center h-52 gap-7 bg-[#F9B234] p-5">
+      <div className="flex items-center justify-center h-52 gap-7 bg-[#F9B234] p-5 overflow-hidden">
         <p className="text-sm">{explain}</p>
         <img src={img} alt="" />
       </div>

@@ -14,7 +14,7 @@ function ENFP() {
   return (
     <main>
       <HeaderType
-        typeName={' پیکارگر'}
+        typeName={'پیکارگر'}
         type={'ENFP-A / ENFP-T'}
         typeImg={enfp}
         color={'#33A474'}
@@ -121,8 +121,9 @@ function ENFP() {
         <div></div>
       </section>
       <PersonTypes
+        categuryName={پیکارگر}
         img1={tarantino}
-        name1={' Quentin Tarantino'}
+        name1={'Quentin Tarantino'}
         img2={williams}
         name2={'Robin Williams'}
         img3={downey}

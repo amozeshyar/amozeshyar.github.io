@@ -14,7 +14,7 @@ function INFJ() {
   return (
     <main>
       <HeaderType
-        typeName={' حامی'}
+        typeName={'حامی'}
         type={'INFJ-A / INFJ-T'}
         typeImg={infj}
         color={'#33A474'}
@@ -128,6 +128,7 @@ function INFJ() {
         <div></div>
       </section>
       <PersonTypes
+        categuryName={'حامی'}
         img1={kondo}
         name1={'Marie Kondo'}
         img2={teresa}

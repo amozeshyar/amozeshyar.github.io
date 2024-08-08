@@ -14,7 +14,7 @@ function INTJ() {
   return (
     <main>
       <HeaderType
-        typeName={' معمار'}
+        typeName={'معمار'}
         type={'INTJ-A / INTJ-T'}
         typeImg={intj}
         color={'#88619A'}
@@ -135,6 +135,7 @@ function INTJ() {
         <div></div>
       </section>
       <PersonTypes
+        categuryName={'معمار'}
         img1={friedrich}
         name1={'Friedrich Nietzsche'}
         img2={michelle}

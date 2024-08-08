@@ -14,7 +14,7 @@ function ESTP() {
   return (
     <main>
       <HeaderType
-        typeName={' کارآفرین'}
+        typeName={'کارآفرین'}
         type={'ESTP-A / ESTP-T'}
         typeImg={estp}
       />
@@ -112,6 +112,7 @@ function ESTP() {
         <div></div>
       </section>
       <PersonTypes
+        categuryName={'کارآفرین'}
         img1={madona}
         name1={'Madona'}
         img2={murphy}

@@ -14,7 +14,7 @@ function ISFP() {
   return (
     <main>
       <HeaderType
-        typeName={' ماجراجو'}
+        typeName={'ماجراجو'}
         type={'ISFP-A / ISFP-T'}
         typeImg={isfp}
       />
@@ -118,6 +118,7 @@ function ISFP() {
         <div></div>
       </section>
       <PersonTypes
+        categuryName={'ماجراجو'}
         img1={costner}
         name1={'Kevin Costner'}
         img2={lavigne}

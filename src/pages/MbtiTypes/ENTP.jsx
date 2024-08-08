@@ -136,14 +136,15 @@ function ENTP() {
         <div></div>
       </section>
       <PersonTypes
+        categuryName={'مجادله گر'}
         img1={Margaret}
         name1={'Thatcher'}
-        img2={Margaret}
-        name2={'Thatcher'}
-        img3={Margaret}
-        name3={'Thatcher'}
-        img4={Margaret}
-        name4={'Thatcher'}
+        img2={steve}
+        name2={'Steve'}
+        img3={whoopi}
+        name3={'Whoopi'}
+        img4={franklin}
+        name4={'Franklin'}
       />
     </main>
   );

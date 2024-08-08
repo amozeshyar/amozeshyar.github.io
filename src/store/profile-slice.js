@@ -274,7 +274,7 @@ const initialState = {
   email: '',
   phone_number: '',
   cv: [],
-  talent_result: [],
+  tests: [], // {name: string; data: object<string, any>}
   image: { url: '', changed: '' },
 };
 
@@ -303,8 +303,16 @@ const profileSlice = createSlice({
     saveResumeArray(state, action) {
       state.resume = action.payload;
     },
-    addTestInTalentTest(state, action) {
-      state.talent_result.push(action.payload);
+    addTest(state, action) {
+      const { name, data } = action.payload;
+      const testIndex = state.tests.findIndex(
+        (test) => test.name === name,
+      );
+      if (testIndex > -1) {
+        state.tests[testIndex] = data;
+      } else {
+        state.tests.push({ name, data });
+      }
     },
   },
 });

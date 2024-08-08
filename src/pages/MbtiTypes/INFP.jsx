@@ -109,14 +109,15 @@ function INTP() {
         <div></div>
       </section>
       <PersonTypes
+        categuryName={'میانجی'}
         img1={tolkien}
-        name1={'   J.R.R. Tolkien'}
+        name1={'J.R.R. Tolkien'}
         img2={shakespeare}
-        name2={'  William Shakespeare '}
+        name2={'William Shakespeare '}
         img3={bjork}
-        name3={'   Björk'}
+        name3={'Björk'}
         img4={alicia}
-        name4={' Alicia Keys'}
+        name4={'Alicia Keys'}
       />
     </main>
   );

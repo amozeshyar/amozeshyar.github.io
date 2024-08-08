@@ -14,7 +14,7 @@ function ESTJ() {
   return (
     <main>
       <HeaderType
-        typeName={' مجری'}
+        typeName={'مجری'}
         type={'ESTJ-A / ESTJ-T'}
         typeImg={estj}
         color={'#4298B4'}
@@ -128,6 +128,7 @@ function ESTJ() {
         <div></div>
       </section>
       <PersonTypes
+        categuryName={'مجری'}
         img1={baker}
         name1={'Ella Baker'}
         img2={judy}

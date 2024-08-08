@@ -125,8 +125,9 @@ function ENTJ() {
         <div></div>
       </section>
       <PersonTypes
+        categuryName={'فرمانده'}
         img1={Margaret}
-        name1={'  Margaret Thatcher'}
+        name1={'Margaret Thatcher'}
         img2={steve}
         name2={'Steve Jobs'}
         img3={whoopi}

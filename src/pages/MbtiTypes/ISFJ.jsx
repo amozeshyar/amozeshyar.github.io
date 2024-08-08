@@ -14,7 +14,7 @@ function ISFJ() {
   return (
     <main>
       <HeaderType
-        typeName={' مدافع'}
+        typeName={'مدافع'}
         type={'ISFJ-A / ISFJ-T'}
         typeImg={isfj}
         color={'#4298B4'}
@@ -139,6 +139,7 @@ function ISFJ() {
         <div></div>
       </section>
       <PersonTypes
+        categuryName={'مدافع'}
         img1={disel}
         name1={'Vin Disel'}
         img2={franklin2}

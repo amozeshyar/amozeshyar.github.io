@@ -14,7 +14,7 @@ function ESFJ() {
   return (
     <main>
       <HeaderType
-        typeName={' سفیر'}
+        typeName={'سفیر'}
         type={'ESFJ-A / ESFJ-T'}
         typeImg={esfj}
         color={'#4298B4'}
@@ -111,6 +111,7 @@ function ESFJ() {
         <div></div>
       </section>
       <PersonTypes
+        categuryName={'سفیر'}
         img1={harvey}
         name1={'Steve Harvey'}
         img2={clinton}

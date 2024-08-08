@@ -35,6 +35,7 @@ const QuestionCard = ({ questionObj }) => {
       <div className="grid grid-cols-5 mb-10 grid-rows-1 gap-2 mt-5 text-md text-xs">
         {choices.map((choice, index) => (
           <button
+            key={choice.text}
             className={`px-2 rounded-xl border shadow-md ${
               selectedChoice &&
               selectedChoice.point ===

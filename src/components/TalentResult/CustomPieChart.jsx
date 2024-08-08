@@ -76,7 +76,7 @@ const renderCustomizedLabel = ({
       index={index}
       className="text-xs"
     >
-      {percent.toFixed(2)}% | {name}
+      {(percent * 100).toFixed(2)}% | {name}
     </text>
   ) : (
     <></>

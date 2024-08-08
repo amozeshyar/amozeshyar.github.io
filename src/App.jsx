@@ -61,6 +61,8 @@ import AboutPage from './pages/AboutusPage/AboutPage';
 import { halandActions } from './store/haland-slice';
 import ForgotPassword from './components/Access/ForgotPassword';
 import ChangePasswordPage from './components/Access/ChangePasswordPage';
+import Haland from './components/TalentSurvey/Haland';
+import TypeScript from './pages/Skill/TypeScript';
 
 function App() {
   const { isLoggedIn, isMoshaver, user_token } =
@@ -132,13 +134,10 @@ function App() {
 
   useEffect(() => {
     if (isLoggedIn) {
-      if (isMoshaver) {
-      } else {
-        dispatch(getUserTickets({ user_token }));
-        dispatch(getUserId({ user_token }));
-      }
+      dispatch(getUserTickets({ user_token }));
+      dispatch(getUserId({ user_token }));
     }
-  }, [isLoggedIn, isMoshaver]);
+  }, [isLoggedIn]);
 
   // user info fetch ---
 
@@ -151,11 +150,11 @@ function App() {
         getProfileInformation({ user_token }),
       );
     }
-  }, [isLoggedIn, isMoshaver]);
+  }, [isLoggedIn]);
 
   useEffect(() => {
     if (isLoggedIn) {
-      if (!isMoshaver && user_id && user_token) {
+      if (user_id && user_token) {
         // dispatch(getCVId({ user_token }));
         dispatch(
           getResume({
@@ -168,29 +167,24 @@ function App() {
         );
       }
     }
-  }, [
-    isLoggedIn,
-    isMoshaver,
-    user_token,
-    user_id,
-  ]);
+  }, [isLoggedIn, user_token, user_id]);
 
-  useEffect(() => {
-    if (talent_result.length > 0) {
-      for (const talentTest of talent_result) {
-        if (talentTest.name === 'mbti') {
-          const type = talentTest.result
-            .split('//', 2)[1]
-            .split('.', 2)[0];
+  // useEffect(() => {
+  //   if (talent_result.length > 0) {
+  //     for (const talentTest of talent_result) {
+  //       if (talentTest.name === 'mbti') {
+  //         const type = talentTest.result
+  //           .split('//', 2)[1]
+  //           .split('.', 2)[0];
 
-          dispatch(mbtiActions.setType(type));
-        }
-        if (talentTest.name === 'haland') {
-          dispatch(halandActions.setIsDone(true));
-        }
-      }
-    }
-  }, [talent_result]);
+  //         dispatch(mbtiActions.setType(type));
+  //       }
+  //       if (talentTest.name === 'haland') {
+  //         dispatch(halandActions.setIsDone(true));
+  //       }
+  //     }
+  //   }
+  // }, [talent_result]);
 
   const userRoutes = (
     <Routes>
@@ -230,19 +224,11 @@ function App() {
 
       <Route
         path="/talent-survey/haland"
-        element={<TalentSurveyTestPage />}
+        element={<Haland />}
       />
       <Route
         path="/talent-survey/mbti"
         element={<MBTI />}
-      />
-      <Route
-        path="/talent-survey/result"
-        element={<TalentSurveyResultListPage />}
-      />
-      <Route
-        path="/talent-survey/result/:testName"
-        element={<TalentSurveyResultPage />}
       />
       <Route
         path="/talent-survey/result/haland"
@@ -271,6 +257,10 @@ function App() {
       <Route
         path="/skill/javaScript"
         element={<JavaScript />}
+      />
+      <Route
+        path="/skill/typeScript"
+        element={<TypeScript />}
       />
       <Route
         path="/skill/python"

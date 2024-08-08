@@ -10,6 +10,8 @@ import uiux from '../../asset/images/ux-ui-design-icon-outline-vector-33243310 1
 import { Link } from 'react-router-dom';
 import { Tooltip } from 'antd';
 
+import TSImage from '../../asset/images/ts.png';
+
 const details = {
   width: '190px',
 };
@@ -98,25 +100,15 @@ export default function SkillCards() {
     },
     {
       id: 6,
-      label: 'Machine Learning',
-      image: ml,
+      label: 'TypeScript',
+      image: TSImage,
       style: details,
-      link: '',
+      link: 'typeScript',
       isBgMode: true,
-      isDevMode: true,
+      isDevMode: false,
     },
-
     {
       id: 7,
-      label: 'Image Processing',
-      image: ip,
-      style: details,
-      link: '',
-      isBgMode: true,
-      isDevMode: true,
-    },
-    {
-      id: 8,
       label: 'React',
       image: react,
       style: details,
@@ -127,27 +119,9 @@ export default function SkillCards() {
 
   return (
     <div className="w-[80%] mx-auto mt-20 grid grid-cols-2 gap-10 items-center justify-center md:grid-cols-3 lg:grid-cols-4">
-      {skillArray.map(
-        ({
-          id,
-          image,
-          label,
-          style,
-          link,
-          isBgMode,
-          isDevMode,
-        }) => (
-          <SkillCard
-            key={id}
-            image={image}
-            label={label}
-            style={style}
-            link={link}
-            isBgMode={isBgMode}
-            isDevMode={isDevMode}
-          />
-        ),
-      )}
+      {skillArray.map((item) => (
+        <SkillCard key={item.id} {...item} />
+      ))}
     </div>
   );
 }

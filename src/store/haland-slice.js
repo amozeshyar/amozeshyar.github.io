@@ -14,41 +14,33 @@ import { profileActions } from './profile-slice';
 export const sendTestResult = createAsyncThunk(
   'haland/sendTestResult',
   async (
-    { user_token, result, name, cb, type },
+    { user_token, testData, cb },
     { dispatch },
   ) => {
-    const objData = { name, result };
-
     try {
-      const response = await axios.post(
-        API_SEND_TALENT_TESTS,
-        JSON.stringify(objData),
-        POST_CONFIG(user_token),
-      );
+      // const response = await axios.post(
+      //   API_SEND_TALENT_TESTS,
+      //   JSON.stringify(testData),
+      //   POST_CONFIG(user_token),
+      // );
 
-      const data = await response.data;
+      dispatch(profileActions.addTest(testData));
 
-      dispatch(
-        profileActions.addTestInTalentTest(data),
-      );
-
-      dispatch(halandActions.setIsDone(true));
-
-      if (type)
-        dispatch(mbtiActions.setType(type));
       dispatch(
         notificationActions.changeSuccess({
           exist: true,
-          message: 'تست با موفقیت انجام شد',
+          message: 'تست با موفقیت انجام شد.',
         }),
       );
 
       cb();
     } catch (error) {
+      console.log(error);
       dispatch(
         notificationActions.changeError({
           exist: true,
-          message: 'مشکلی در ارسال تست وجود دارد',
+          message:
+            'مشکلی در ارسال تست وجود دارد.',
         }),
       );
     }

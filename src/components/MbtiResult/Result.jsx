@@ -15,11 +15,18 @@ import ISTP from '../../pages/MbtiTypes/ISTP';
 import ISFP from '../../pages/MbtiTypes/ISFP';
 import ESTP from '../../pages/MbtiTypes/ESTP';
 import ESFP from '../../pages/MbtiTypes/ESFP';
+import MBTI from '../TalentSurvey/MBTI';
 
 function Result() {
-  const { ansArray, type } = useSelector(
-    (state) => state.mbti,
+  const tests = useSelector(
+    (state) => state.profile.tests,
   );
+
+  const mbitRes = tests.find(
+    (test) => test.name === 'mbti',
+  );
+
+  const type = mbitRes?.data;
 
   if (type == 'ENTJ') {
     return <ENTJ />;
@@ -51,7 +58,8 @@ function Result() {
     return <ESTP />;
   } else if (type == 'ESFP') {
     return <ESFP />;
-  } else
-    throw new Error('Invalid Type Personality');
+  } else {
+    return <MBTI />;
+  }
 }
 export default Result;

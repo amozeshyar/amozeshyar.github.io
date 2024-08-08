@@ -112,12 +112,13 @@ function ENFJ() {
         </div>
       </section>
       <PersonTypes
+        categuryName={'قهرمان'}
         img1={barack}
-        name1={' Barack Obama'}
+        name1={'Barack Obama'}
         img2={oprah}
-        name2={'  Oprah Winfrey '}
+        name2={'Oprah Winfrey '}
         img3={john}
-        name3={' John Cusack'}
+        name3={'John Cusack'}
         img4={ben}
         name4={'Ben Affleck'}
       />

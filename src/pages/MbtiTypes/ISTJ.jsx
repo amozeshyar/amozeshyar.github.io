@@ -14,7 +14,7 @@ function ISTJ() {
   return (
     <main>
       <HeaderType
-        typeName={' تدارکاتچی'}
+        typeName={'تدارکاتچی'}
         type={'ISTJ-A / ISTJ-T'}
         typeImg={istj}
         color={'#4298B4'}
@@ -163,6 +163,7 @@ function ISTJ() {
         <div></div>
       </section>
       <PersonTypes
+        categuryName={'تدارکاتچی'}
         img1={portman}
         name1={'Natalie Portman'}
         img2={merkel}

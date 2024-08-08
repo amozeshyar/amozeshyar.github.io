@@ -14,7 +14,7 @@ function ISTP() {
   return (
     <main>
       <HeaderType
-        typeName={' چیره دست'}
+        typeName={'چیره دست'}
         type={'ISTP-A / ISTP-T'}
         typeImg={istp}
       />
@@ -112,6 +112,7 @@ function ISTP() {
         <div></div>
       </section>
       <PersonTypes
+        categuryName={'چیره دست'}
         img1={eastwood}
         name1={'Clint Eastwood'}
         img2={jordan}

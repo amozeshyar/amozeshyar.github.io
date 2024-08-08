@@ -15,7 +15,7 @@ function INTP() {
   return (
     <main>
       <HeaderType
-        typeName={'منطق‌دان'}
+        typeName={'منطقدان'}
         type={'INTP-A / INTP-T'}
         typeImg={intp}
         color={'#88619A'}
@@ -137,6 +137,7 @@ function INTP() {
         <div></div>
       </section>
       <PersonTypes
+        categuryName={'منطقدان'}
         img1={Bill}
         name1={'bill'}
         img2={kristen}

@@ -6,16 +6,22 @@ import {
   useDispatch,
   useSelector,
 } from 'react-redux';
-import { Link } from 'react-router-dom';
+import {
+  Link,
+  useNavigate,
+} from 'react-router-dom';
 import axios from 'axios';
-import { API_TALENT } from '../../api/configAPI';
-import { resumeActions } from '../../store/resume-slice';
-import { halandActions } from '../../store/haland-slice';
+import {
+  halandActions,
+  sendTestResult,
+} from '../../store/haland-slice';
+import { calculateHalandTest } from '../../functions/calculateResultTest';
+import { profileActions } from '../../store/profile-slice';
 
 function Haland() {
   const { user_token, isLoggedIn } = useSelector(
     (state) => state.auth,
-  )
+  );
 
   const dispatch = useDispatch();
 
@@ -60,6 +66,10 @@ function Haland() {
   const currentQuestions =
     questions_holland.slice(startIndex, endIndex);
 
+  const calculateResult = (ansArray) => {
+    return calculateHalandTest(ansArray);
+  };
+
   const backHandler = () => {
     setCurrentPage((prev) => prev - 1);
   };
@@ -68,19 +78,29 @@ function Haland() {
     setCurrentPage((prev) => prev + 1);
   };
 
-
   const isLastPage =
     currentPage ===
     Math.floor(totalQuestions / 6);
 
+  const navigate = useNavigate();
+
   const seeTheResultHandler = () => {
-    const result_string =
-      JSON.stringify(ansArray);
-    localStorage.setItem(
-      'talent-survey',
-      result_string,
+    const testData = {
+      name: 'haland',
+      data: calculateResult(ansArray),
+    };
+    console.log(testData.data);
+    const callbackFunction = () => {
+      navigate('/talent-survey/result/haland');
+      window.scrollTo(0, 0);
+    };
+    dispatch(
+      sendTestResult({
+        user_token,
+        testData,
+        cb: callbackFunction,
+      }),
     );
-    
   };
 
   return ansArray.length === totalQuestions ? (
@@ -133,10 +153,7 @@ function Haland() {
               className="text-white bg-primaryColor rounded-3xl text-base"
               onClick={seeTheResultHandler}
             >
-              <Link
-                to="/talent-survey/result"
-                className="py-3 px-6"
-              >
+              <Link className="py-3 px-6">
                 دیدن نتیجه تست
               </Link>
             </button>
