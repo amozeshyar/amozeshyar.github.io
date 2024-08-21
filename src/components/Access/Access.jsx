@@ -93,11 +93,11 @@ const Access = () => {
           />
         </>
       )}
-      {model && (
+      {/* {model && (
         <ForgotPassword
           toggleModeHandler={toggleMode}
         />
-      )}
+      )} */}
     </section>
   );
 };

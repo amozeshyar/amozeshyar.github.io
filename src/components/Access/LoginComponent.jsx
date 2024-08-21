@@ -81,12 +81,12 @@ const LoginComponent = () => {
             autoComplete="off"
             role="password"
           />
-          <Link
+          {/* <Link
             to="/access/forgot"
             className="font-bold text-primaryColor text-[11px]"
           >
             رمز عبور خود را فراموش کرده اید؟
-          </Link>
+          </Link> */}
 
           <div className="flex flex-col gap-3  justify-between">
             <button
