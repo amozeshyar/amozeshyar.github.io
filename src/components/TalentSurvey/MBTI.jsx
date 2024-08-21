@@ -17,7 +17,14 @@ function MBTI() {
   const { user_token } = useSelector(
     (state) => state.auth,
   );
+  const { tests } = useSelector(
+    (state) => state.profile,
+  );
   const dispatch = useDispatch();
+
+  const alreadyExist = tests?.find(
+    (test) => test.name === 'mbti',
+  );
 
   useEffect(() => {
     dispatch(mbtiActions.setAns([]));
@@ -53,10 +60,9 @@ function MBTI() {
   const navigate = useNavigate();
 
   const seeTheResultHandler = () => {
-    let resultPath = '/talent-survey/result/mbti';
     const callbackFunction = () => {
-      navigate(resultPath);
       window.scrollTo(0, 0);
+      navigate('/talent-survey/result/mbti');
     };
 
     const calculateResult = () => {
@@ -101,6 +107,7 @@ function MBTI() {
       name: 'mbti',
       data: resultPersonality,
     };
+
     dispatch(
       sendTestResult({
         user_token,
@@ -162,7 +169,9 @@ function MBTI() {
               className="text-white bg-primaryColor rounded-3xl p-2 px-3 text-base"
               onClick={seeTheResultHandler}
             >
-              adsfasdf دیدن نتیجه تست
+              {/* <Link to="/talent-survey/result/mbti"> */}
+              دیدن نتیجه تست
+              {/* </Link> */}
             </button>
           )}
         </section>

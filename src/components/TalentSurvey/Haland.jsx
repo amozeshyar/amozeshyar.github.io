@@ -89,7 +89,7 @@ function Haland() {
       name: 'haland',
       data: calculateResult(ansArray),
     };
-    console.log(testData.data);
+
     const callbackFunction = () => {
       navigate('/talent-survey/result/haland');
       window.scrollTo(0, 0);

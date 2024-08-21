@@ -1,5 +1,5 @@
 export const baseUrl =
-  'https://Amoozeshyar.iran.liara.run';
+  'https://amoozeshyar-back.liara.run';
 
 export const POST_CONFIG = (user_token) => {
   return {
@@ -78,8 +78,8 @@ export const API_CHANGE_PASSWORD =
 
 // --- very funny API
 
-// export const API_GET_CV_ID =
-//   baseUrl + '/api/cv/get_cv-id/';
+export const API_GET_CV_ID =
+  baseUrl + '/api/cv/get_cv-id/';
 
 export const API_GET_USER_ID =
   baseUrl + '/user/get_user-id';
@@ -105,6 +105,8 @@ export const API_GET_CV = (user_id) =>
   baseUrl + `/api/cv/${user_id}/`;
 
 export const API_CREATE_CV = baseUrl + '/api/cv/';
+export const API_PATCH_CV = (user_id) =>
+  baseUrl + `/api/cv/${user_id}/`;
 
 export const API_ADD_EDU_CV = (cv_id) =>
   baseUrl + `/api/cv/${cv_id}/education/`;
@@ -155,11 +157,7 @@ export const API_GET_MOSHAVER_OWN_TICKETS =
 
 // --- Talent API
 
-export const API_TALENT_TESTS = (user_id) =>
-  baseUrl +
-  `/user/user-talent-surveys/${user_id}`;
-
-export const API_SEND_TALENT_TESTS =
-  baseUrl + '/api/talent-survey/';
+export const API_TALENT_TESTS = (testName) =>
+  baseUrl + `/api/talent-survey/${testName}/`;
 
 // Talent API ---

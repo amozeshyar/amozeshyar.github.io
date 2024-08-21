@@ -6,6 +6,7 @@ import {
 
 import ResumeInput from '../ResumeInput';
 import { resumeActions } from '../../../store/resume-slice';
+import { validDayJs } from '../../../functions/date';
 
 const WorkExperienceContent = () => {
   const dispatch = useDispatch();
@@ -28,16 +29,12 @@ const WorkExperienceContent = () => {
   const employmentTitleRef = useRef(null);
   const occupationalGroupRef = useRef(null);
   const companyNameRef = useRef(null);
-  // const startDateRef = useRef(null);
-  // const endDateRef = useRef(null);
 
   useEffect(() => {
     employmentStatusRef.current.value =
       employmentStatus;
     employmentTitleRef.current.value =
       employmentTitle;
-    // startDateRef.current.value = startDate;
-    // endDateRef.current.value = endDate;
     occupationalGroupRef.current.value =
       occupationalGroup;
     companyNameRef.current.value = companyName;
@@ -159,14 +156,20 @@ const WorkExperienceContent = () => {
             type="date"
             name="start-date-work"
             onChange={startDateChangeHandler}
-            // innerRef={startDateRef}
+            defaultValue={
+              startDate
+                ? validDayJs(startDate)
+                : null
+            }
           />
           <ResumeInput
             label="تاریخ پایان"
             type="date"
             name="end-date-work"
             onChange={endDateChangeHandler}
-            // innerRef={endDateRef}
+            defaultValue={
+              endDate ? validDayJs(endDate) : null
+            }
           />
         </div>
       </div>

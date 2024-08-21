@@ -22,6 +22,8 @@ import {
   sendWorkExperienceInfo,
 } from '../../../store/resume-slice';
 
+import styles from './style.module.css';
+
 export default function ResumeCreatingPage() {
   const params = useParams();
   const navigate = useNavigate();
@@ -112,6 +114,7 @@ export default function ResumeCreatingPage() {
           ...baseInformation,
           user_id,
           user_token,
+          hasAlready: !!cv_id,
           cb: () =>
             callbackFunction(destinationPath),
         }),
@@ -124,6 +127,7 @@ export default function ResumeCreatingPage() {
           ...education,
           cv_id,
           user_token,
+          hasAlready: !!cv_id,
           cb: () =>
             callbackFunction(destinationPath),
         }),
@@ -136,6 +140,7 @@ export default function ResumeCreatingPage() {
           ...workExperience,
           cv_id,
           user_token,
+          hasAlready: !!cv_id,
           cb: () =>
             callbackFunction(destinationPath),
         }),
@@ -165,21 +170,20 @@ export default function ResumeCreatingPage() {
             <Link
               to={baseURL + stepObj.path}
               kye={stepObj.path}
-              className={`flex items-center justify-center w-[calc(100%/4-2px)] h-[50px] py-4 px-2 text-center bg-gray-600 rounded-t-2xl shadow-lg`}
+              className={`flex items-center justify-center w-[calc(100%/4-2px)] h-[50px] py-4 px-2 text-center bg-gray-600 rounded-t-2xl shadow-lg ${styles.Container}`}
               style={
                 stepObj.path === stepFind.path
                   ? {
                       backgroundColor: '#F5AF2B',
                       height: '75px',
                     }
-                  : null
+                  : {}
               }
             >
               {stepObj.name}
             </Link>
           ))}
         </div>
-        {/* content */}
         {content}
       </div>
       <div className="flex self-end">

@@ -1,3 +1,11 @@
+import dayjs from 'dayjs';
+import advancedFormat from 'dayjs/plugin/advancedFormat';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+import localeData from 'dayjs/plugin/localeData';
+import weekday from 'dayjs/plugin/weekday';
+import weekOfYear from 'dayjs/plugin/weekOfYear';
+import weekYear from 'dayjs/plugin/weekYear';
+
 export const getLabelFromDate = (date) => {
   const day = new Intl.DateTimeFormat(
     'fa-IR-u-nu-latn',
@@ -85,3 +93,13 @@ export const isAnotherDay = (date1, date2) => {
     return true;
   return false;
 };
+
+dayjs.extend(customParseFormat);
+dayjs.extend(advancedFormat);
+dayjs.extend(weekday);
+dayjs.extend(localeData);
+dayjs.extend(weekOfYear);
+dayjs.extend(weekYear);
+
+export const validDayJs = (date) =>
+  dayjs(date, { jalali: true });

@@ -49,33 +49,24 @@ import MyTicketsPage from './pages/MoshaverPages/MyTicketsPage/MyTicketsPage';
 
 import { getUserTickets } from './store/ticket-slice';
 import {
-  // getCVId,
   getProfileInformation,
   getTalents,
   getUserId,
   getUserImageProfile,
 } from './store/profile-slice';
 import { getResume } from './store/resume-slice';
-import { mbtiActions } from './store/mbti-slice';
 import AboutPage from './pages/AboutusPage/AboutPage';
-import { halandActions } from './store/haland-slice';
 import ForgotPassword from './components/Access/ForgotPassword';
 import ChangePasswordPage from './components/Access/ChangePasswordPage';
 import Haland from './components/TalentSurvey/Haland';
 import TypeScript from './pages/Skill/TypeScript';
+import PrintResume from './components/Resume/Print/Print';
 
 function App() {
   const { isLoggedIn, isMoshaver, user_token } =
     useSelector((state) => state.auth);
   const { user_id } = useSelector(
     (state) => state.profile,
-  );
-  const { talent_result } = useSelector(
-    (state) => state.profile,
-  );
-
-  const { type } = useSelector(
-    (state) => state.mbti,
   );
 
   const navigate = useNavigate();
@@ -155,15 +146,25 @@ function App() {
   useEffect(() => {
     if (isLoggedIn) {
       if (user_id && user_token) {
-        // dispatch(getCVId({ user_token }));
         dispatch(
           getResume({
             user_token,
-            cv_id: 'cv_id',
+            user_id,
           }),
         );
         dispatch(
-          getTalents({ user_token, user_id }),
+          getTalents({
+            user_token,
+            user_id,
+            testName: 'haland',
+          }),
+        );
+        dispatch(
+          getTalents({
+            user_token,
+            user_id,
+            testName: 'mbti',
+          }),
         );
       }
     }
@@ -218,6 +219,10 @@ function App() {
         element={<ResumeCreatingPage />}
       />
       <Route
+        path="/resume-print"
+        element={<PrintResume />}
+      />
+      <Route
         path="/talent-survey"
         element={<TalentSurveyPage />}
       />
@@ -227,6 +232,10 @@ function App() {
         element={<Haland />}
       />
       <Route
+        path="/talent-survey/result/mbti"
+        element={<MbtiResult />}
+      />
+      <Route
         path="/talent-survey/mbti"
         element={<MBTI />}
       />
@@ -234,10 +243,7 @@ function App() {
         path="/talent-survey/result/haland"
         element={<HalandResult />}
       />
-      <Route
-        path="/talent-survey/result/mbti"
-        element={<MbtiResult />}
-      />
+
       <Route
         path="/profile"
         element={<ProfilePage />}

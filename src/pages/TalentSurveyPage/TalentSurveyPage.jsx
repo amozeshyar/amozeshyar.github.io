@@ -7,12 +7,13 @@ import mbtiImage from '/src/images/Mbti.png';
 import { useSelector } from 'react-redux';
 
 export default function TalentSurveyPage() {
-  const { talent_result: talentArrayResult } =
-    useSelector((state) => state.profile);
+  const { tests } = useSelector(
+    (state) => state.profile,
+  );
 
   let mbtiIsDone, halandIsDone;
 
-  talentArrayResult?.forEach((item) => {
+  tests.forEach((item) => {
     if (item.name === 'haland')
       halandIsDone = true;
     else if (item.name === 'mbti')

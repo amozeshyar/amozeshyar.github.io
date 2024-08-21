@@ -24,24 +24,15 @@ export default function UserInfo() {
     (state) => state.auth,
   );
 
-  const { isDone } = useSelector(
-    (state) => state.haland,
-  );
-
   const [error, setError] = useState(null);
 
   const {
     first_name,
     last_name,
     email,
-    phone_number,
-    cv,
-    talent_result: talentTestsArray,
+    username,
+    tests,
   } = useSelector((state) => state.profile);
-
-  const { type } = useSelector(
-    (state) => state.mbti,
-  );
 
   const filedChangeHandler = (e, prop) => {
     const value = e.target.value;
@@ -70,9 +61,9 @@ export default function UserInfo() {
     },
     {
       id: 2,
-      label: 'شماره موبایل',
-      prop: 'phone_number',
-      value: phone_number,
+      label: 'نام کاربری',
+      prop: 'username',
+      value: username,
       onChange: filedChangeHandler,
     },
     {
@@ -92,7 +83,7 @@ export default function UserInfo() {
       first_name.trim().length < 2 ||
       last_name.trim().length < 2 ||
       email.trim().length < 2 ||
-      phone_number.trim().length < 2
+      username.trim().length < 2
     ) {
       setError(
         'یکی از فیلد ها اشتباهی مقدار دهی شده است',
@@ -104,7 +95,7 @@ export default function UserInfo() {
       first_name,
       last_name,
       email,
-      phone_number,
+      username,
     };
 
     dispatch(
@@ -185,33 +176,28 @@ export default function UserInfo() {
             }}
           >
             <p>رزومه من</p>
-            {/* <Progress
-              className="w-[40%] mt-2"
-              percent={50}
-              style={{ direction: 'ltr' }}
-              strokeColor={'#24AD29'}
-            /> */}
-            <div className="flex gap-x-2">
-              <Button
-                type="button"
-                className="px-0 py-0 shadow-profile-talent-btn rounded-md text-xs bg-white"
+            <div className="flex items-center gap-x-2">
+              <Link
+                to="/resume-creating-app/base-information"
+                className="inline-block h-full w-full px-4 py-2"
+                onClick={scrollToTop}
               >
-                <Link
-                  to="/resume-creating-app/base-information"
-                  className="inline-block h-full w-full px-4 py-2"
-                  onClick={scrollToTop}
-                >
-                  اعمال تغییرات
-                </Link>
-              </Button>
-              <Tooltip title="به زودی این قابلیت ایجاد خواهد شد">
                 <Button
                   type="button"
-                  className="px-5 bg-[#24AD29] text-white text-xs rounded-md cursor-not-allowed"
+                  className="px-0 py-0 shadow-profile-talent-btn rounded-md text-xs bg-white"
+                >
+                  اعمال تغییرات
+                </Button>
+              </Link>
+
+              <Link to="/resume-print">
+                <Button
+                  type="button"
+                  className="px-5 bg-[#24AD29] text-white text-xs rounded-md"
                 >
                   دانلود
-                </Button>
-              </Tooltip>
+                </Button>{' '}
+              </Link>
             </div>
           </div>
           <div
@@ -222,37 +208,16 @@ export default function UserInfo() {
           >
             <p>نتیجه خودشناسی</p>
             <div className="flex gap-x-2">
-              {talentTestsArray.length > 0 ? (
-                /*               (
-                talentTestsArray.map(
-                  (talentTest) => (
-                    <TalentResultBtn
-                      key={talentTest.id}
-                      talent={talentTest}
-                    />
-                  ),
-                )
-              )  */
-                <>
-                  {type ? (
-                    <TalentResultBtn
-                      talent={{
-                        label: 'نتیجه تست MBTI',
-                        name: 'mbti',
-                        value: 'result/mbti',
-                      }}
-                    />
-                  ) : null}
-                  {isDone ? (
-                    <TalentResultBtn
-                      talent={{
-                        label: 'نتیجه تست Haland',
-                        name: 'Haland',
-                        value: 'result/haland',
-                      }}
-                    />
-                  ) : null}
-                </>
+              {tests?.length > 0 ? (
+                tests.map(({ name }) => (
+                  <TalentResultBtn
+                    talent={{
+                      label: `نتیجه تست ${name?.toUpperCase()}`,
+                      name,
+                      value: `result/${name}`,
+                    }}
+                  />
+                ))
               ) : (
                 <div className="flex items-center gap-x-2">
                   <p>

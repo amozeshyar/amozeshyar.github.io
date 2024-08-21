@@ -10,6 +10,7 @@ import ResumeInput from '../ResumeInput';
 
 import { resumeActions } from '../../../store/resume-slice';
 import profileImage from '../../../asset/images/people-media-profile.svg';
+import { validDayJs } from '../../../functions/date';
 
 const BaseInformationContent = () => {
   const jensiatOptions = [
@@ -21,10 +22,10 @@ const BaseInformationContent = () => {
       value: 'F',
       label: 'زن',
     },
-    {
-      value: 'U',
-      label: 'تمایلی به اعلام ندارم',
-    },
+    // {
+    //   value: 'U',
+    //   label: 'تمایلی به اعلام ندارم',
+    // },
   ];
 
   const vaziatTaaholOptions = [
@@ -85,7 +86,6 @@ const BaseInformationContent = () => {
   const phoneNumberRef = useRef(null);
   const firstNameRef = useRef(null);
   const lastNameRef = useRef(null);
-  // const birthdayDateRef = useRef(null);
   const addressRef = useRef(null);
 
   const nameResumeChangeHandler = (e) => {
@@ -132,6 +132,7 @@ const BaseInformationContent = () => {
     date,
     dateString,
   ) => {
+    console.log(date, dateString);
     dispatch(
       resumeActions.changeBaseInformation({
         prop: 'birthdayDate',
@@ -359,6 +360,11 @@ const BaseInformationContent = () => {
             name="date-birthday"
             type="date"
             onChange={birthdayChangeHandler}
+            defaultValue={
+              birthdayDate
+                ? validDayJs(birthdayDate)
+                : null
+            }
           />
 
           <ResumeInput

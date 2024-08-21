@@ -1,0 +1,117 @@
+@media print {
+  .NoPrint {
+    display: none;
+  }
+  .Divider {
+    background-color: #d9d9d9;
+    padding: 0.5rem;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    border-radius: 8px;
+    font-size: 1.25rem;
+  }
+  .AllBaseInfo {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    row-gap: 1rem;
+  }
+
+  .Wraper {
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
+    width: 70%;
+    margin: 25px auto;
+  }
+
+  .BaseInfo {
+    h2 {
+      font-weight: 400;
+      font-size: 1rem;
+    }
+    div {
+      border: 1px solid #d9d9d9;
+      padding: 0.5rem;
+      border-radius: 8px;
+      min-width: 150px;
+    }
+  }
+
+  .Image {
+    aspect-ratio: 1;
+    width: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+  .Image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.AllBaseInfo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  row-gap: 1rem;
+}
+
+.BaseInfo {
+  h2 {
+    font-weight: 400;
+    font-size: 1rem;
+  }
+  div {
+    border: 1px solid #d9d9d9;
+    padding: 0.5rem;
+    border-radius: 8px;
+    min-width: 150px;
+  }
+}
+
+.Divider {
+  background-color: #d9d9d9;
+  padding: 0.5rem;
+  border-radius: 8px;
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.Wraper {
+  display: flex;
+  flex-direction: column;
+  row-gap: 2rem;
+  width: 70%;
+  margin: 50px auto;
+  padding-bottom: 2rem;
+}
+
+@page {
+  size: auto;
+  margin: 0mm;
+}
+
+.Image {
+  aspect-ratio: 1;
+  width: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.Image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.Btn {
+  margin-bottom: 2rem;
+  width: fit-content;
+}
+
+.Sticky {
+  position: fixed;
+  right: 40px;
+  bottom: 10px;
+}

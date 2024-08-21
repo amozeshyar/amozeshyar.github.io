@@ -8,6 +8,7 @@ import { ConfigProvider } from 'antd';
 const CustomDatePicker = ({
   value,
   onChange,
+  defaultValue,
 }) => {
   const currentDate = new Date();
 
@@ -39,6 +40,7 @@ const CustomDatePicker = ({
     >
       <JalaliLocaleListener />
       <DatePickerJalali
+        defaultValue={defaultValue}
         value={value}
         placement="topRight"
         onChange={onChange}

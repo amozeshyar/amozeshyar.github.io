@@ -3,6 +3,7 @@ import {
   useLocation,
 } from 'react-router-dom';
 import Modal from '../../components/UI/Modal';
+import { useSelector } from 'react-redux';
 
 export default function NotFoundPage() {
   const needLoginLinksArray = [
@@ -12,11 +13,16 @@ export default function NotFoundPage() {
     'resume-creating-app',
   ];
 
+  const { isLoggedIn } = useSelector(
+    (state) => state.auth,
+  );
+
   const { pathname } = useLocation();
   const route = pathname.split('/')[1];
   console.log(route);
 
   const isneedLogin =
+    !isLoggedIn &&
     needLoginLinksArray.includes(route);
 
   return (

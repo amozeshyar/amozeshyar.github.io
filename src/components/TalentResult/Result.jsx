@@ -7,14 +7,63 @@ import CustomPieChart from './CustomPieChart';
 
 import lump from '../../asset/images/lump.png';
 
+const parseTestData = (testRes) => {
+  const results = [
+    {
+      point: 0,
+      num: 1,
+      name: 'قاعده‌مند و قراردادی',
+      color: '#A89ADF',
+    },
+    {
+      point: 0,
+      num: 2,
+      name: 'جستجوگر',
+      color: '#22CBFF',
+    },
+    {
+      point: 0,
+      num: 3,
+      name: 'هنری',
+      color: '#FCC22F',
+    },
+    {
+      point: 0,
+      num: 3,
+      name: 'اجتماعی',
+      color: '#2DDAB0',
+    },
+    {
+      num: 4,
+      point: 0,
+      name: 'مدیر و جسور',
+      color: '#20D050',
+    },
+    {
+      num: 5,
+      point: 0,
+      name: 'عمل‌گرا',
+      color: '#717171',
+    },
+  ];
+
+  testRes?.split(',').forEach((ans, index) => {
+    results[index].point = +ans;
+  });
+
+  return results;
+};
+
 function Result() {
   const testData = useSelector(
     (state) => state.profile.tests,
   );
 
-  const halandRes = testData.find(
+  const { data } = testData.find(
     (test) => test.name === 'haland',
   );
+
+  const parsedData = parseTestData(data);
 
   return (
     <>
@@ -25,10 +74,8 @@ function Result() {
         <h2 className="text-center">
           نتیجه تست هالند شما
         </h2>
-        {halandRes && (
-          <CustomPieChart
-            results={halandRes.data}
-          />
+        {parsedData && (
+          <CustomPieChart results={parsedData} />
         )}
         <section className="">
           <div>

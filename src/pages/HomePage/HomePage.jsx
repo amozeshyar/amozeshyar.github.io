@@ -181,7 +181,7 @@ export default function HomePage() {
               bottom: '75%',
             }}
           >
-            <p >ساخت رزومه</p>
+            <p>ساخت رزومه</p>
             <p className="text-xs font-light">
               مثل حرفه ایا رزومه بساز
             </p>
@@ -194,9 +194,7 @@ export default function HomePage() {
               bottom: '42%',
             }}
           >
-            <p>
-              کسب مهارت
-            </p>
+            <p>کسب مهارت</p>
             <p className="text-xs font-light">
               یادگیری مهارت های دلخواهتون به روش
               بهترینا

@@ -3,11 +3,20 @@ import {
   useSelector,
 } from 'react-redux';
 import ResumeInput from '../ResumeInput';
-import { resumeActions } from '../../../store/resume-slice';
+import {
+  getResume,
+  resumeActions,
+} from '../../../store/resume-slice';
 import { useEffect, useRef } from 'react';
+import { getCVId } from '../../../store/profile-slice';
+import { validDayJs } from '../../../functions/date';
 
 const EducationContent = () => {
   const dispatch = useDispatch();
+
+  const { isLoggedIn, user_token } = useSelector(
+    (state) => state.auth,
+  );
 
   // initialize
   const { education } = useSelector(
@@ -16,15 +25,13 @@ const EducationContent = () => {
 
   const gradeEducationRef = useRef(null);
   const fieldOfStudyRef = useRef(null);
-  // const startDateRef = useRef(null);
-  // const endDateRef = useRef(null);
   const nameUniversityRef = useRef(null);
 
   const {
     gradeEducation,
     fieldOfStudy,
-    // startDate,
-    // endDate,
+    startDate,
+    endDate,
     nameUniversity,
   } = education;
 
@@ -32,8 +39,6 @@ const EducationContent = () => {
     gradeEducationRef.current.value =
       gradeEducation;
     fieldOfStudyRef.current.value = fieldOfStudy;
-    // startDateRef.current.value = startDate;
-    // endDateRef.current.value = endDate;
     nameUniversityRef.current.value =
       nameUniversity;
   }, []);
@@ -123,14 +128,20 @@ const EducationContent = () => {
             name="start-date"
             placeholder="زمان شروع"
             onChange={startDateChangeHandler}
-            // innerRef={startDateRef}
+            defaultValue={
+              startDate
+                ? validDayJs(startDate)
+                : null
+            }
           />
           <ResumeInput
             label="تاریخ پایان"
             type="date"
             name="end-date"
             onChange={endDateChangeHandler}
-            // innerRef={endDateRef}
+            defaultValue={
+              endDate ? validDayJs(endDate) : null
+            }
           />
         </div>
         <ResumeInput

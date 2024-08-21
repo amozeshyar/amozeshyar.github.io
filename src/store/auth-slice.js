@@ -44,8 +44,7 @@ if (roleData.role) {
 
 let initialState = {
   user_token: initialToken,
-  isLoggedIn: true,
-  // isLoggedIn: !!initialToken,
+  isLoggedIn: !!initialToken,
   email: '',
   number: '',
   isMoshaver: initialRole

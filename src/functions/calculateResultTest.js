@@ -5,37 +5,37 @@ export const calculateHalandTest = (ansArray) => {
   });
   const results = [
     {
-      num: 1,
       point: 0,
+      num: 1,
       name: 'قاعده‌مند و قراردادی',
       color: '#A89ADF',
     },
     {
-      num: 2,
       point: 0,
+      num: 2,
       name: 'جستجوگر',
       color: '#22CBFF',
     },
     {
-      num: 3,
       point: 0,
+      num: 3,
       name: 'هنری',
       color: '#FCC22F',
     },
     {
-      num: 4,
       point: 0,
+      num: 3,
       name: 'اجتماعی',
       color: '#2DDAB0',
     },
     {
-      num: 5,
+      num: 4,
       point: 0,
       name: 'مدیر و جسور',
       color: '#20D050',
     },
     {
-      num: 6,
+      num: 5,
       point: 0,
       name: 'عمل‌گرا',
       color: '#717171',
@@ -65,5 +65,7 @@ export const calculateHalandTest = (ansArray) => {
     }
   });
 
-  return results;
+  return results
+    .map((item) => item.point)
+    .join(',');
 };

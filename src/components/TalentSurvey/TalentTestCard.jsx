@@ -30,6 +30,7 @@ export default function TalentTestCard({
               </Link>
               <Link
                 to={`/talent-survey/result/${name}`}
+                onClick={() => scrollTo(0, 0)}
               >
                 <button className="float-left bg-primaryColor px-7 p-2 rounded-3xl text-white">
                   دیدن نتایج

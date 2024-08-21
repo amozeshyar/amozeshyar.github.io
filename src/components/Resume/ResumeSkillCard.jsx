@@ -20,10 +20,14 @@ const ResumeSkillCard = ({
   );
   const dispatch = useDispatch();
 
+  const { cv_id } = useSelector(
+    (state) => state.resume,
+  );
+
   const deleteHandler = async () => {
     try {
       await axios.delete(
-        API_DELETE_SKILL_CV(1, id),
+        API_DELETE_SKILL_CV(cv_id, id),
         {
           headers: {
             'Content-Type': 'application/json',
@@ -40,6 +44,7 @@ const ResumeSkillCard = ({
       );
       dispatch(resumeActions.deleteSkill(id));
     } catch (error) {
+      console.log(error);
       dispatch(
         notificationActions.changeError({
           exist: true,

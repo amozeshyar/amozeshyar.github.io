@@ -21,9 +21,10 @@ const SkillsContent = () => {
   const { user_token } = useSelector(
     (state) => state.auth,
   );
+
   const dispatch = useDispatch();
 
-  const { skill } = useSelector(
+  const { skill, cv_id } = useSelector(
     (state) => state.resume,
   );
 
@@ -54,9 +55,12 @@ const SkillsContent = () => {
       // lvl: skill_lvl,
     };
     dispatch(
-      sendSkills({ data: skill_obj, user_token }),
+      sendSkills({
+        data: skill_obj,
+        cv: cv_id,
+        user_token,
+      }),
     );
-    // dispatch(resumeActions.addSkill(skill_obj));
     resetFields();
   };
 
@@ -67,7 +71,7 @@ const SkillsContent = () => {
   return (
     <div className="resume-step-content">
       <div className="grid grid-cols-2 gap-20 pt-8">
-        <div className="flex flex-col">
+        <div className="flex flex-col items-start justify-between gap-10">
           <ResumeInput
             label="مهارت"
             type="text"
@@ -76,7 +80,7 @@ const SkillsContent = () => {
             placeholder="فن بیان"
             innerRef={skillRef}
           />
-          <div className="flex flex-col my-8">
+          {/* <div className="flex flex-col my-8">
             <label htmlFor="lvl-skills">
               سطح تسلط
             </label>
@@ -90,7 +94,7 @@ const SkillsContent = () => {
             <span className="self-end">
               {lvlSkill * 20}%
             </span>
-          </div>
+          </div> */}
           <ButtonAddResume
             onClick={skillAddHandler}
           />

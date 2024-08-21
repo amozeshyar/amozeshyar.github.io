@@ -8,6 +8,8 @@ export default function ResumeInput({
   className,
   placeholder,
   innerRef,
+  value,
+  defaultValue,
   ...props
 }) {
   return (
@@ -16,7 +18,11 @@ export default function ResumeInput({
         {label}
       </label>
       {type === 'date' ? (
-        <CustomDatePicker onChange={onChange} />
+        <CustomDatePicker
+          value={value}
+          onChange={onChange}
+          defaultValue={defaultValue}
+        />
       ) : (
         <input
           id={name}
@@ -25,6 +31,7 @@ export default function ResumeInput({
           aria-label={name}
           className={`py-2 px-4 text-sm rounded-xl bg-gray-400 focus:outline-none focus:outline-gray-500 placeholder-gray-800 ${className}`}
           onChange={onChange}
+          value={value}
           {...props}
           ref={innerRef}
         />

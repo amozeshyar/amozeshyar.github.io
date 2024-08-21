@@ -5,6 +5,7 @@ import {
 import axios from 'axios';
 import {
   API_CHANGE_FIELD_PROFILE,
+  API_GET_CV_ID,
   // API_GET_CV_ID,
   API_GET_PROFILE,
   API_GET_USER_ID,
@@ -16,6 +17,7 @@ import {
   POST_CONFIG_FILE,
 } from '../api/configAPI';
 import { notificationActions } from './notification-slice';
+import { resumeActions } from './resume-slice';
 
 const trunkDecmimal = (num) => {
   if (num < 1) {
@@ -32,52 +34,47 @@ const ERROR_MESSAGE =
 export const getTalents = createAsyncThunk(
   'profile/getTalents',
   async (
-    { user_token, user_id },
+    { user_token, testName },
     { dispatch },
   ) => {
     try {
       const response = await axios.get(
-        API_TALENT_TESTS(user_id),
+        API_TALENT_TESTS(testName),
         GET_CONFIG(user_token),
       );
 
       const data = await response.data;
 
-      dispatch(
-        profileActions.changeField({
-          prop: 'talent_result',
-          value: data,
-        }),
-      );
+      const validData = {
+        name: testName,
+        data: data[0].type,
+      };
+
+      dispatch(profileActions.addTest(validData));
     } catch (error) {}
   },
 );
 
-// export const getCVId = createAsyncThunk(
-//   'profile/getCVId',
-//   async ({ user_token }, { dispatch }) => {
-//     try {
-//       const response = await axios.get(
-//         API_GET_CV_ID,
-//         // GET_CONFIG(user_token),
-//         {
-//           headers: {
-//             Authorization: user_token,
-//           },
-//         },
-//       );
-//       const data = await response.data;
+export const getCVId = createAsyncThunk(
+  'profile/getCVId',
+  async ({ user_token }, { dispatch }) => {
+    try {
+      const response = await axios.get(
+        API_GET_CV_ID,
+        {
+          headers: {
+            Authorization: user_token,
+          },
+        },
+      );
+      const { cv_id } = await response.data;
 
-//       console.log(data);
-//       // dispatch(
-//       //   profileActions.changeField({
-//       //     prop: 'user_id',
-//       //     value: user_id,
-//       //   }),
-//       // );
-//     } catch (error) {}
-//   },
-// );
+      dispatch(resumeActions.setCVID(cv_id));
+    } catch (error) {
+      console.log(error);
+    }
+  },
+);
 
 export const getUserId = createAsyncThunk(
   'profile/getUserId',
@@ -116,15 +113,19 @@ export const getProfileInformation =
 
         const userData = await response.data;
 
-        const { first_name, last_name, email } =
-          userData.user;
+        const {
+          first_name,
+          last_name,
+          email,
+          username,
+        } = userData.user;
 
         dispatch(
           profileActions.saveUserInfo({
             first_name,
             last_name,
             email,
-            phone_number: userData.phone_number,
+            username,
           }),
         );
       } catch (error) {}
@@ -272,7 +273,7 @@ const initialState = {
   first_name: '',
   last_name: '',
   email: '',
-  phone_number: '',
+  username: '',
   cv: [],
   tests: [], // {name: string; data: object<string, any>}
   image: { url: '', changed: '' },
@@ -287,13 +288,13 @@ const profileSlice = createSlice({
         first_name,
         last_name,
         email,
-        phone_number,
+        username,
       } = action.payload;
 
       state.first_name = first_name;
       state.last_name = last_name;
       state.email = email;
-      state.phone_number = phone_number;
+      state.username = username;
     },
     changeField(state, action) {
       const { prop, value } = action.payload;
@@ -308,8 +309,9 @@ const profileSlice = createSlice({
       const testIndex = state.tests.findIndex(
         (test) => test.name === name,
       );
+      console.log(testIndex);
       if (testIndex > -1) {
-        state.tests[testIndex] = data;
+        state.tests[testIndex].data = data;
       } else {
         state.tests.push({ name, data });
       }

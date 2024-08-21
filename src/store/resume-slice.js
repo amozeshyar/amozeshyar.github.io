@@ -9,6 +9,7 @@ import {
   API_ADD_WORK_CV,
   API_CREATE_CV,
   API_GET_CV,
+  API_PATCH_CV,
   GET_CONFIG,
 } from '../api/configAPI';
 import axios from 'axios';
@@ -28,27 +29,191 @@ interface CityType {
 
 */
 
+const parseDataResume = (data) => {
+  const {
+    educations,
+    works,
+    skills,
+    duty_system: nezamVazife,
+    martial_status: vaziatTaahol,
+    data_of_birth: birthdayDate,
+    city,
+    address,
+    phone_number: phonenumber,
+    about_me: nameResume,
+    firstname: firstName,
+    lastname: lastName,
+    gender,
+    id,
+  } = data;
+
+  const validGender = (gender) => {
+    switch (gender) {
+      case 'M':
+        return {
+          value: 'M',
+          label: 'مرد',
+        };
+      case 'F':
+        return {
+          value: 'F',
+          label: 'زن',
+        };
+      case 'U':
+        return {
+          value: 'U',
+          label: 'تمایلی به اعلام ندارم',
+        };
+    }
+  };
+
+  const validVaziatTaahol = (vaziatTaahol) => {
+    switch (vaziatTaahol) {
+      case '2':
+        return {
+          value: '2',
+          label: 'مجرد',
+        };
+      case '1':
+        return {
+          value: '1',
+          label: 'متاهل',
+        };
+    }
+  };
+
+  const validMartialStatus = (ms) => {
+    switch (ms) {
+      case '3':
+        return { value: '3', label: 'مشمول' };
+      case '2':
+        return {
+          value: '2',
+          label: 'معافیت دائم',
+        };
+      case '1':
+        return {
+          value: '1',
+          label: 'معافیت تحصیلی',
+        };
+      case '0':
+        return {
+          value: '4',
+          label: 'پایان خدمت',
+        };
+    }
+  };
+
+  const validCity = (city) => {
+    const cities = [
+      { value: 'tehran', label: 'تهران' },
+      { value: 'esfahan', label: 'اصفهان' },
+      { value: 'mashhad', label: 'مشهد' },
+      { value: 'shiraz', label: 'شیراز' },
+      { value: 'kermanshah', label: 'کرمانشاه' },
+      { value: 'ahvaz', label: 'اهواز' },
+      { value: 'tabriz', label: 'تبریز' },
+    ];
+    const findedCity = cities.find(
+      (cityObj) => cityObj.value === city,
+    );
+
+    return findedCity;
+  };
+
+  const baseInfo = {
+    nezamVazife: validMartialStatus(nezamVazife),
+    vaziatTaahol: validVaziatTaahol(vaziatTaahol),
+    birthdayDate,
+    city: validCity(city),
+    address,
+    phonenumber,
+    nameResume,
+    firstName,
+    lastName,
+    generic: validGender(gender),
+  };
+
+  return {
+    baseInfo,
+    education: educations.slice(-1)[0],
+    work: works.slice(-1)[0],
+    skills,
+  };
+};
+
 const ERROR_MESSAGE =
   'مشکلی در ذخیره اطلاعات پیش آمده است';
 const SUCCESS_MESSAGE = 'تغییرات ذخیره شد.';
 
 export const getResume = createAsyncThunk(
   'resume/getResume',
-  async ({ cv_id, user_token }, { dispatch }) => {
+  async (
+    { user_id, user_token },
+    { dispatch },
+  ) => {
     // we have one resume for now, so cv_id is 1
     try {
       const response = await axios.get(
-        API_GET_CV(1),
+        API_GET_CV(user_id),
         GET_CONFIG(user_token),
       );
 
       const data = await response.data;
 
+      const {
+        baseInfo,
+        education,
+        work,
+        skills,
+        id,
+      } = parseDataResume(data);
+
+      dispatch(resumeActions.setCVID(id));
+
       dispatch(
-        profileActions.saveResumeArray(data),
+        resumeActions.setBaseInformation(
+          baseInfo,
+        ),
       );
 
-      console.log(response);
+      const validEducation = {
+        gradeEducation: education.grade,
+        fieldOfStudy: education.field_of_study,
+        startDate: education.start_date,
+        endDate: education.end_date,
+        nameUniversity: education.university,
+      };
+
+      dispatch(
+        resumeActions.setEducation(
+          validEducation,
+        ),
+      );
+
+      const validWork = {
+        employmentStatus: work.description,
+        employmentTitle: work.title,
+        companyName: work.company,
+        occupationalGroup: work.industry,
+        startDate: work.start_date,
+        endDate: work.end_date,
+      };
+
+      dispatch(
+        resumeActions.setWorkExperience(
+          validWork,
+        ),
+      );
+
+      const validSkills = skills.map((skill) => ({
+        name: skill.title,
+        id: skill.id,
+      }));
+
+      dispatch(
+        resumeActions.setSkill(validSkills),
+      );
     } catch (error) {}
   },
 );
@@ -69,6 +234,7 @@ export const createResume = createAsyncThunk(
       birthdayDate: data_of_birth,
       address: address,
       user_id,
+      hasAlready,
       cb,
     } = data;
 
@@ -87,17 +253,30 @@ export const createResume = createAsyncThunk(
     };
 
     try {
-      const res = await axios.post(
-        API_CREATE_CV,
-        JSON.stringify(valid_obj),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Token ${user_token}`,
-          },
-        },
-      );
-      const cvId = await res.data;
+      const res = await (hasAlready
+        ? axios.patch(
+            API_PATCH_CV(user_id),
+            JSON.stringify(valid_obj),
+            {
+              headers: {
+                'Content-Type':
+                  'application/json',
+                Authorization: `Token ${user_token}`,
+              },
+            },
+          )
+        : axios.post(
+            API_CREATE_CV,
+            JSON.stringify(valid_obj),
+            {
+              headers: {
+                'Content-Type':
+                  'application/json',
+                Authorization: `Token ${user_token}`,
+              },
+            },
+          ));
+      const cvId = await res.data.id;
       dispatch(resumeActions.setCVID(cvId));
       dispatch(
         notificationActions.changeSuccess({
@@ -129,6 +308,7 @@ export const sendEducationInfo = createAsyncThunk(
       cv_id,
       user_token,
       cb,
+      hasAlready,
     } = data;
 
     const valid_obj = {
@@ -137,20 +317,33 @@ export const sendEducationInfo = createAsyncThunk(
       start_date,
       end_date,
       university,
-      cv_id: 1,
+      cv_id,
     };
 
     try {
-      await axios.post(
-        API_ADD_EDU_CV(1),
-        JSON.stringify(valid_obj),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Token ${user_token}`,
-          },
-        },
-      );
+      await (hasAlready
+        ? axios.post(
+            API_ADD_EDU_CV(cv_id),
+            JSON.stringify(valid_obj),
+            {
+              headers: {
+                'Content-Type':
+                  'application/json',
+                Authorization: `Token ${user_token}`,
+              },
+            },
+          )
+        : axios.post(
+            API_ADD_EDU_CV(cv_id),
+            JSON.stringify(valid_obj),
+            {
+              headers: {
+                'Content-Type':
+                  'application/json',
+                Authorization: `Token ${user_token}`,
+              },
+            },
+          ));
       dispatch(
         notificationActions.changeSuccess({
           exist: true,
@@ -174,6 +367,7 @@ export const sendWorkExperienceInfo =
     'resume/sendWorkExperienceInfo',
     async (data, { dispatch }) => {
       const {
+        employmentStatus: description,
         employmentTitle: title, // String
         occupationalGroup: industry, // String
         companyName: company, // String
@@ -190,11 +384,13 @@ export const sendWorkExperienceInfo =
         company,
         start_date,
         end_date,
+        cv_id,
+        description,
       };
 
       try {
         await axios.post(
-          API_ADD_WORK_CV(1),
+          API_ADD_WORK_CV(cv_id),
           JSON.stringify(valid_obj),
           {
             headers: {
@@ -224,11 +420,14 @@ export const sendWorkExperienceInfo =
 
 export const sendSkills = createAsyncThunk(
   'resume/createResume',
-  async ({ data, user_token }, { dispatch }) => {
+  async (
+    { data, user_token, cv },
+    { dispatch },
+  ) => {
     try {
       const response = await axios.post(
-        API_ADD_SKILL_CV(1),
-        JSON.stringify(data),
+        API_ADD_SKILL_CV(cv),
+        JSON.stringify({ ...data, cv_id: cv }),
         {
           headers: {
             'Content-Type': 'application/json',
@@ -333,7 +532,7 @@ const resumeSlice = createSlice({
       state.workExperience[prop] = value;
     },
     setSkill(state, action) {
-      state.skill = action.payload;
+      state.skill.skills = action.payload;
     },
     changeSkill(state, action) {
       const { prop, value } = action.payload;
@@ -376,9 +575,10 @@ const resumeSlice = createSlice({
     },
     deleteSkill(state, action) {
       const skill = action.payload;
-      state.skill = state.skill.filter(
-        (skillItem) => +skillItem.id !== +skill,
-      );
+      state.skill.skills =
+        state.skill.skills.filter(
+          (skillItem) => +skillItem.id !== +skill,
+        );
     },
   },
 });

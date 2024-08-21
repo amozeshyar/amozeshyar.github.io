@@ -86,9 +86,9 @@ export default function ProfilePage() {
             </span>
             {imageInfo.isUpload && (
               <Progress
-                percent={
-                  +imageInfo.progress * 100
-                }
+                percent={Math.floor(
+                  +imageInfo.progress * 100,
+                )}
                 status="active"
               />
             )}

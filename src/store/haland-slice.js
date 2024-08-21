@@ -4,7 +4,8 @@ import {
 } from '@reduxjs/toolkit';
 import axios from 'axios';
 import {
-  API_SEND_TALENT_TESTS,
+  API_TALENT_TESTS,
+  PATCH_CONFIG,
   POST_CONFIG,
 } from '../api/configAPI';
 import { mbtiActions } from './mbti-slice';
@@ -18,11 +19,12 @@ export const sendTestResult = createAsyncThunk(
     { dispatch },
   ) => {
     try {
-      // const response = await axios.post(
-      //   API_SEND_TALENT_TESTS,
-      //   JSON.stringify(testData),
-      //   POST_CONFIG(user_token),
-      // );
+      const { data, name } = testData;
+      await axios.post(
+        API_TALENT_TESTS(name),
+        JSON.stringify({ type: data }),
+        POST_CONFIG(user_token),
+      );
 
       dispatch(profileActions.addTest(testData));
 

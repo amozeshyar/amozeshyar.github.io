@@ -15,6 +15,8 @@ import {
 import imageProfile from '../../asset/images/people-media-profile.svg';
 import { authActions } from '../../store/auth-slice';
 
+import printStyles from "../Resume/Print/style.module.css";
+
 import './index.css';
 
 function getItem(
@@ -71,12 +73,12 @@ export default function Navbar() {
         pathname === '/'
           ? 'bg-white'
           : 'bg-primaryColor'
-      }`}
+      } ${printStyles.NoPrint}`}
     >
       <div className="flex items-center w-full">
         {pathname !== '/' && (
           <Link to="/">
-            <h1 className="hidden ml-4 text-xl lg:text-2xl md:block">
+            <h1 className="hidden ml-4 text-xl lg:text-2xl lg:block">
               آموزشیار
             </h1>
           </Link>
